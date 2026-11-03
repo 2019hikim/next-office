@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다음오피스 한글 테스트</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { display: block; height: auto; max-width: 760px; margin: 40px auto; padding: 0 16px; background: #fff; }
+  h1 { font-size: 24px; margin-bottom: 4px; }
+  #summary { font-size: 20px; font-weight: 700; margin: 12px 0 20px; }
+  .all-pass { color: #15803d; }
+  .has-fail { color: #b91c1c; }
+  ul { list-style: none; padding: 0; }
+  li { border-bottom: 1px solid #e5e7eb; padding: 10px 4px; }
+  .ok::before { content: "통과  "; color: #15803d; font-weight: 700; }
+  .fail::before { content: "실패  "; color: #b91c1c; font-weight: 700; }
+  .error { color: #6b7280; font-size: 14px; margin-top: 4px; }
+</style>
+</head>
+<body>
+  <h1>다음오피스 한글 테스트</h1>
+  <p>소스를 고친 뒤 이 페이지를 새로고침한다. node 테스트(tests/run-tests.js)와 같은 테스트에 화면 테스트가 더해진다.</p>
+  <p id="summary">테스트 중…</p>
+  <ul id="results"></ul>
+
+  <script src="xml.js"></script>
+  <script src="zip.js"></script>
+  <script src="docmodel.js"></script>
+  <script src="hwpx.js"></script>
+  <script src="editor-dom.js"></script>
+  <script src="tests/mini-test.js"></script>
+  <script src="tests/xml.test.js"></script>
+  <script src="tests/zip.test.js"></script>
+  <script src="tests/docmodel.test.js"></script>
+  <script src="tests/hwpx.test.js"></script>
+  <script src="tests/editor-dom.test.js"></script>
+  <script>
+    runTests().then(function (results) {
+      var pass = results.filter(function (r) { return r.ok; }).length;
+      var summary = document.getElementById("summary");
+      summary.textContent = "전체 " + results.length + "개 중 통과 " + pass + "개, 실패 " + (results.length - pass) + "개";
+      summary.className = pass === results.length ? "all-pass" : "has-fail";
+      var list = document.getElementById("results");
+      results.forEach(function (r) {
+        var li = document.createElement("li");
+        li.className = r.ok ? "ok" : "fail";
+        li.appendChild(document.createTextNode(r.name));
+        if (!r.ok) {
+          var error = document.createElement("div");
+          error.className = "error";
+          error.textContent = r.error;
+          li.appendChild(error);
+        }
+        list.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>

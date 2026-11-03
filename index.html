@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>새 문서.hwpx - 다음오피스 한글</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="menubar" role="toolbar" aria-label="파일 메뉴">
+    <span class="app-name">다음오피스 한글</span>
+    <div class="group">
+      <button type="button" id="newButton" title="새 문서 (Alt+N)">새 문서</button>
+      <button type="button" id="openButton" title="열기 (Ctrl+O)">열기</button>
+      <button type="button" id="saveButton" title="저장 (Ctrl+S)">저장</button>
+      <button type="button" id="saveAsButton" title="다른 이름으로 저장 (Ctrl+Shift+S)">다른 이름으로 저장</button>
+    </div>
+    <div class="group">
+      <button type="button" id="previewButton" title="미리보기">미리보기</button>
+      <button type="button" id="printButton" title="인쇄 (Ctrl+P)">인쇄</button>
+    </div>
+    <div class="group">
+      <button type="button" data-command="undo" title="실행 취소 (Ctrl+Z)">↶ 실행 취소</button>
+      <button type="button" data-command="redo" title="다시 실행 (Ctrl+Y)">↷ 다시 실행</button>
+    </div>
+  </header>
+
+  <div class="toolbar" role="toolbar" aria-label="서식">
+    <div class="group">
+      <label class="sr-only" for="fontName">글꼴</label>
+      <select id="fontName" title="글꼴"></select>
+      <label class="sr-only" for="fontSize">글자 크기</label>
+      <select id="fontSize" title="글자 크기 (pt)"></select>
+    </div>
+    <div class="group">
+      <button type="button" data-command="bold" title="굵게 (Ctrl+B)"><b>가</b></button>
+      <button type="button" data-command="italic" title="기울임 (Ctrl+I)"><i>가</i></button>
+      <button type="button" data-command="underline" title="밑줄 (Ctrl+U)"><u>가</u></button>
+      <button type="button" data-command="strikeThrough" title="취소선"><s>가</s></button>
+      <label class="color-label" title="글자 색">
+        <span aria-hidden="true">색</span>
+        <input type="color" id="fontColor" value="#000000" aria-label="글자 색">
+      </label>
+    </div>
+    <div class="group">
+      <button type="button" data-command="justifyLeft" data-align="left" title="왼쪽 정렬">왼쪽</button>
+      <button type="button" data-command="justifyCenter" data-align="center" title="가운데 정렬">가운데</button>
+      <button type="button" data-command="justifyRight" data-align="right" title="오른쪽 정렬">오른쪽</button>
+      <button type="button" data-command="justifyFull" data-align="justify" title="양쪽 정렬">양쪽</button>
+    </div>
+    <div class="group">
+      <label for="lineSpacing">줄 간격</label>
+      <select id="lineSpacing" title="줄 간격 (%)"></select>
+    </div>
+    <div class="group">
+      <label for="zoom">확대</label>
+      <select id="zoom" title="화면 확대">
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1" selected>100%</option>
+        <option value="1.25">125%</option>
+        <option value="1.5">150%</option>
+        <option value="2">200%</option>
+      </select>
+    </div>
+  </div>
+
+  <main class="workspace" id="workspace">
+    <div class="paper-sizer" id="paperSizer">
+      <div class="paper" id="paper">
+        <div id="editor" class="page doc-body" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="문서 본문"></div>
+        <div class="page-marks" id="pageMarks" aria-hidden="true"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="statusbar">
+    <span id="statusFile"></span>
+    <span id="statusPages"></span>
+    <span id="statusChars"></span>
+    <span id="statusZoom"></span>
+  </footer>
+
+  <div class="preview" id="preview" hidden role="dialog" aria-modal="true" aria-label="인쇄 미리보기">
+    <div class="preview-bar">
+      <strong>인쇄 미리보기</strong>
+      <span id="previewInfo"></span>
+      <span class="spacer"></span>
+      <button type="button" id="previewPrint">인쇄</button>
+      <button type="button" id="previewClose">닫기 (Esc)</button>
+    </div>
+    <div class="preview-pages" id="previewPages"></div>
+  </div>
+
+  <dialog id="unsavedDialog">
+    <form method="dialog">
+      <p>저장하지 않은 변경 내용이 있습니다.<br>지금 저장할까요?</p>
+      <div class="dialog-buttons">
+        <button value="save" class="primary">저장</button>
+        <button value="discard">저장 안 함</button>
+        <button value="cancel">취소</button>
+      </div>
+    </form>
+  </dialog>
+
+  <input type="file" id="fileInput" accept=".hwpx,.txt" hidden>
+  <div id="printArea" aria-hidden="true"></div>
+
+  <script src="xml.js"></script>
+  <script src="zip.js"></script>
+  <script src="docmodel.js"></script>
+  <script src="hwpx.js"></script>
+  <script src="editor-dom.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
